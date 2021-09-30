@@ -5,7 +5,7 @@ while getopts "o" option;
 do
  case $option in
   o)
-   echo "Received -o flag for optional checkout of GTG, will check out GTG with EMC_post"
+   echo "Received -o flag for optional checkout of GTG, will check out GTG with UPP"
    checkout_gtg="YES"
    ;;
   :)
@@ -38,7 +38,7 @@ if [[ ! -d gsi.fd ]] ; then
     rm -f ${topdir}/checkout-gsi.log
     git clone --recursive https://github.com/NOAA-EMC/GSI.git gsi.fd >> ${topdir}/checkout-gsi.log 2>&1
     cd gsi.fd
-    git checkout gfsda.v16.1.1a
+    git checkout gfsda.v16.1.4
     git submodule update
     cd ${topdir}
 else
@@ -67,10 +67,10 @@ else
     echo 'Skip.  Directory ufs_utils.fd already exists.'
 fi
 
-echo EMC_post checkout ...
+echo UPP checkout ...
 if [[ ! -d gfs_post.fd ]] ; then
     rm -f ${topdir}/checkout-gfs_post.log
-    git clone https://github.com/NOAA-EMC/EMC_post.git gfs_post.fd >> ${topdir}/checkout-gfs_post.log 2>&1
+    git clone https://github.com/NOAA-EMC/UPP.git gfs_post.fd >> ${topdir}/checkout-gfs_post.log 2>&1
     cd gfs_post.fd
     git checkout upp_gfsv16_release.v1.1.4
     ################################################################################
