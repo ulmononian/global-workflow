@@ -121,4 +121,15 @@ else
     echo 'Skip. Directory verif-global.fd already exist.'
 fi
 
+echo global-workflow-utils checkout ...
+if [[ ! -d global-workflow-utils.fd ]] ; then
+    rm -f ${topdir}/checkout-verif-global.log
+    git clone --recursive https://github.com/NOAA-EMC/global-workflow-utils.git global-workflow-utils.fd >> ${logdir}/checkout-global-workflow-utils.log 2>&1
+    cd global-workflow-utils.fd
+    # git checkout verif_global_v2.8.0
+    cd ${topdir}
+else
+    echo 'Skip. Directory global-workflow-utils.fd already exist.'
+fi
+
 exit 0
