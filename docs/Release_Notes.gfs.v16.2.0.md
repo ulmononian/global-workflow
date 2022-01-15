@@ -15,7 +15,7 @@ The NOAA VLab and both the NOAA-EMC and NCAR organization spaces on GitHub.com a
 cd $PACKAGEROOT
 mkdir gfs.v16.2.0
 cd gfs.v16.2.0
-git clone -b EMC-v16.2.0  https://github.com/NOAA-EMC/global-workflow.git .
+git clone -b EMC-v16.2.0.1 https://github.com/NOAA-EMC/global-workflow.git .
 cd sorc
 ./checkout.sh -o
 ```
@@ -31,15 +31,21 @@ The checkout script extracts the following GFS components:
 | POST      | upp_v8.1.0 | Wen.Meng@noaa.gov |
 | WAFS      | gfs_wafs.v6.2.7 | Yali.Mao@noaa.gov |
 
-To build all the GFS components, execute
+To build all the GFS components, execute:
 ```bash
 ./build_all.sh
 ```
 The `build_all.sh` script compiles all GFS components. Runtime output from the build for each package is written to log files in directory logs. To build an individual program, for instance, gsi, use `build_gsi.sh`.
 
-Finally, link the executables, fix files, parm files etc in their final respective locations by executing:
+Next, link the executables, fix files, parm files etc in their final respective locations by executing:
 ```bash
 ./link_fv3gfs.sh nco wcoss2
+```
+
+Lastly, link the ecf scripts by moving back up to the ecf folder and executing:
+```bash
+cd ../ecf
+./setup_ecf_links.sh
 ```
 
 SORC CHANGES
