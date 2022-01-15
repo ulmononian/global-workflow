@@ -1,34 +1,26 @@
 extern /prod06/gdas/jgdas_forecast
 extern /prod06/gdas/atmos/post
 extern /prod06/enkfgdas/post
-#### ecen
 extern /prod06/gdas/atmos/post_processing/jgdas_atmos_chgres_forenkf
 
 suite prod12
   repeat day 1
   edit ECF_TRIES '1'
   edit CYC '12'
+  edit NET 'gfs'
   edit ENVIR 'prod'
   edit PROJ 'GFS'
   edit PROJENVIR 'DEV'
   edit QUEUE 'dev'
   edit QUEUESHARED 'dev_shared'
   edit QUEUESERV 'dev_transfer'
-  edit ECF_INCLUDE '/lfs/h2/emc/global/noscrub/Lin.Gan/git/feature-ops-wcoss2/ecf/include'
   edit MACHINE_SITE 'development'
+  edit PACKAGEHOME '<USER_PACKAGEHOME>'
+  edit COM '<USER_COM>'
 
   family gfs
-    edit CYC '12'
-    edit PACKAGEHOME '/lfs/h2/emc/global/noscrub/Lin.Gan/git/feature-ops-wcoss2'
     edit ECF_FILES '%PACKAGEHOME%/ecf/scripts/gfs'
-    edit PROJ 'GFS'
-    edit PROJENVIR 'DEV'
-    edit NET 'gfs'
     edit RUN 'gfs'
-    edit COM '/lfs/h2/emc/ptmp/Lin.Gan/ecfops/com'
-    edit QUEUE 'dev'
-    edit QUEUESHARED 'dev_shared'
-    edit QUEUESERV 'dev_transfer'
     family atmos
       family obsproc
         family dump
@@ -2250,17 +2242,8 @@ suite prod12
       trigger ./atmos/analysis/jgfs_atmos_analysis:release_fcst and ./wave/prep/jgfs_wave_prep == complete
   endfamily
   family gdas
-    edit CYC '12'
-    edit PACKAGEHOME '/lfs/h2/emc/global/noscrub/Lin.Gan/git/feature-ops-wcoss2'
     edit ECF_FILES '%PACKAGEHOME%/ecf/scripts/gdas'
-    edit PROJ 'GFS'
-    edit PROJENVIR 'DEV'
-    edit NET 'gfs'
     edit RUN 'gdas'
-    edit COM '/lfs/h2/emc/ptmp/Lin.Gan/ecfops/com'
-    edit QUEUE 'dev'
-    edit QUEUESHARED 'dev_shared'
-    edit QUEUESERV 'dev_transfer'
     family atmos
       family obsproc
         family dump
@@ -2417,17 +2400,8 @@ suite prod12
       trigger ./atmos/analysis/jgdas_atmos_analysis:release_fcst and ./wave/prep/jgdas_wave_prep == complete and ./atmos/init/jgdas_atmos_gldas == complete
   endfamily
   family enkfgdas
-    edit CYC '12'
-    edit PACKAGEHOME '/lfs/h2/emc/global/noscrub/Lin.Gan/git/feature-ops-wcoss2'
     edit ECF_FILES '%PACKAGEHOME%/ecf/scripts/enkfgdas'
-    edit PROJ 'GFS'
-    edit PROJENVIR 'DEV'
-    edit NET 'gfs'
     edit RUN 'gdas'
-    edit COM '/lfs/h2/emc/ptmp/Lin.Gan/ecfops/com'
-    edit QUEUE 'dev'
-    edit QUEUESHARED 'dev_shared'
-    edit QUEUESERV 'dev_transfer'
     family analysis
       family create
         task jenkfgdas_select_obs
@@ -2652,6 +2626,6 @@ suite prod12
         edit FHMIN_EPOS '009'
         edit FHMAX_EPOS '009'
         edit FHOUT_EPOS '009'
-    endfamily                      #### epos
-  endfamily                        #### enkf
+    endfamily
+  endfamily
 endsuite
