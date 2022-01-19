@@ -1,5 +1,5 @@
 #PBS -S /bin/bash
-#PBS -N gfs_atmos_vminmon_%CYC%
+#PBS -N %RUN%_atmos_vminmon_%CYC%
 #PBS -j oe
 #PBS -q %QUEUE%
 #PBS -A %PROJ%-%PROJENVIR%
@@ -34,7 +34,6 @@ module list
 #############################################################
 export cyc=%CYC%
 export cycle=t%CYC%z
-export COM_IN=%COM%/${NET}/${gfs_ver}
 export VERBOSE=YES
 
 ############################################################
