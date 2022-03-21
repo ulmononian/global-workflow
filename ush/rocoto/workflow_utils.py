@@ -180,6 +180,7 @@ class HostInfo:
             'queue': 'batch',
             'queue_service': 'service',
             'partition_batch': 'orion',
+            'partition_service': 'orion',
             'chgrp_rstprod': 'YES',
             'chgrp_cmd': 'chgrp rstprod',
             'hpssarch': 'NO',
@@ -403,6 +404,7 @@ def get_resources(machine, cfg, task, reservation, cdump='gdas'):
     ltask = 'eobs' if task in ['eomg'] else task
 
     memory = cfg.get(f'memory_{ltask}', None)
+    native = cfg.get(f'native_{ltask}', None)
 
     if cdump in ['gfs'] and f'npe_{task}_gfs' in cfg.keys():
         tasks = cfg[f'npe_{ltask}_gfs']
@@ -423,10 +425,17 @@ def get_resources(machine, cfg, task, reservation, cdump='gdas'):
     nodes = np.int(np.ceil(np.float(tasks) / np.float(ppn)))
 
     memstr = '' if memory is None else str(memory)
-    natstr = ''
-
+        
     if scheduler in ['slurm']:
-        natstr = '--export=NONE'
+        if native is None:
+            natstr = '--export=NONE'
+        else:
+            natstr = str(native) + ' --export=NONE'
+    else:
+        if native is None:
+            natstr = ''
+        else:
+            natstr = str(native)
 
     if machine in ['HERA', 'JET', 'ORION', 'WCOSS_C', 'WCOSS_DELL_P3']:
 
